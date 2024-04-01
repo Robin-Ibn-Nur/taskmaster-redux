@@ -2,11 +2,18 @@ import {
   CheckIcon,
   DocumentMagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { userTasks } from '../../redux/features/tasks/tasksSlice';
 
 const MyTasks = () => {
-  const { tasks } = useSelector((state) => state.tasksSlice);
-  console.log(tasks);
+  const { tasks, userTasks } = useSelector((state) => state.tasksSlice);
+  const { name: userName } = useSelector((state) => state.userSlice)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(userTasks(userName))
+  }, [userName, dispatch])
 
   return (
     <div>
